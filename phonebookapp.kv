@@ -1,0 +1,69 @@
+#:kivy 2.1.0
+
+<MainWindow>:
+    orientation: 'vertical'
+
+    MDTopAppBar:
+        title: 'Телефонная книга'
+
+    MDBottomNavigation:
+        MDBottomNavigationItem:
+            name: "screen search"
+            text: "СПИСОК КОНТАКТОВ"
+            icon: "phone-log"
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                MDBoxLayout:
+                    MDTextField:
+                        id: search_name
+                        hint_text: "Поиск по имени"
+
+                    MDRectangleFlatButton:
+                        text: "НАЙТИ"
+                        on_release:
+                            app.name_search_result_list(root.ids.search_name.text)
+
+                MDBoxLayout:
+                    MDTextField:
+                        id: search_phone
+                        hint_text: "Поиск по номеру"
+
+                    MDRectangleFlatButton:
+                        text: "НАЙТИ"
+                        on_release:
+                            app.phone_search_result_list(root.ids.search_phone.text)
+                        
+                ScrollView:
+                    MDList:
+                        id:scroll
+
+        MDBottomNavigationItem:
+            name: "screen add"
+            text: "ДОБАВИТЬ"
+            icon: "pen-plus"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                MDTextField:
+                    hint_text: "Введите имя контакта"
+                    id: add_name
+                MDTextField:
+                    hint_text: "Введите номера телефонов"
+                    id: add_phones
+                    multiline: True
+                Widget:
+                MDFloatingActionButton:
+                    icon: "plus"
+                    pos_hint: {"right": .95}
+                    on_release:
+                        app.save_contact(root.ids.add_name.text, root.ids.add_phones.text)
+
+
+
+
+<SearchResultItem>:
+    IconLeftWidget:
+        icon: 'phone'
+    RightButton:
+        icon: 'delete'
